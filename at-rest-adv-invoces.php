@@ -20,7 +20,9 @@ define('AT_REST_ADV_INVOICES_ACTIVE', true);
 require_once AT_REST_ADV_INVOICES_DIR . 'src/AdvertisementOrderManager.php';
 require_once AT_REST_ADV_INVOICES_DIR . 'src/SettingsPage.php';
 require_once AT_REST_ADV_INVOICES_DIR . 'src/AdvertisementMetaBox.php';
+require_once AT_REST_ADV_INVOICES_DIR . 'src/AdvertisenemtCustomColumn.php';
 
 $orderManager = new \Supernova\AtRestAdvInvoices\AdvertisementOrderManager();
 $settings = new \Supernova\AtRestAdvInvoices\SettingsPage();
 new \Supernova\AtRestAdvInvoices\AdvertisementMetaBox($settings, $orderManager);
+new \Supernova\AtRestAdvInvoices\AdvertisenemtCustomColumn($orderManager);

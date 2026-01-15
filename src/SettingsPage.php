@@ -75,7 +75,6 @@ class SettingsPage
         }
         
         return null;
-
     }
 
 }

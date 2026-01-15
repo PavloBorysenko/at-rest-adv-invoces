@@ -74,8 +74,7 @@ class AdvertisementMetaBox {
 
         $postId = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
         $date = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : '';
-        //$year = isset($_POST['year']) ? sanitize_text_field($_POST['year']) : '';
-        //$month = isset($_POST['month']) ? sanitize_text_field($_POST['month']) : '';
+
 
         if (!$postId || !$date) {
             wp_send_json_error(['message' => 'Invalid data']);

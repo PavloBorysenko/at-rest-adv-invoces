@@ -3,7 +3,6 @@
         <p>
             Please set advertiser for this advertisement first and update this advertisement.
         </p>
-
     <?php
         return;
     } ?>
@@ -36,7 +35,7 @@
             <div class="order-item">
                 <a target="_blank" href="<?php echo $order['link']; ?>"><?php echo '#' . $order['id']; ?></a>
                 <span class="order-date"><?php echo $order['month'] . ' ' . $order['year']; ?></span>
-                <span class="order-status order-status-<?php echo sanitize_title($order['status']); ?>"><?php echo $order['status']; ?></span>
+                <span class="order-status order-status-<?php echo sanitize_title($order['status']); ?>"><?php echo wc_get_order_status_name($order['status']); ?></span>
             </div>
         <?php endforeach; ?>
         <?php if (empty($ordersData)) : ?>

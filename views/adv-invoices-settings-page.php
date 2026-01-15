@@ -1,11 +1,10 @@
 <div class="wrap">
     <h1>Adv Invoices Settings</h1>   
-<form method="post" action="options.php">
+        <form method="post" action="options.php">
             <?php 
                 settings_fields($optionGroup);
                 do_settings_sections($optionGroup);
             ?>
-
             <table class="form-table">
                 <tr>
                     <th><label for="ad_type">Products for ad types</label></th>
@@ -35,7 +34,6 @@
                 </tr>
 
             </table>
-
             <?php submit_button('Save settings'); ?>
         </form>
 

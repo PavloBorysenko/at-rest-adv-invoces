@@ -9,33 +9,42 @@ class AdvertisementOrderManager {
         $order->set_customer_id(0);
         $order->set_status('pending');
 
-        $itemId = $order->add_product(wc_get_product($productId), 1);
-        
-        $item = $order->get_item($itemId);
-        $monthName = $this->getMonthName($this->getMonth($date));
-        $item->add_meta_data( 'Payment for', $monthName . ' ' . $this->getYear($date), true );
+        $this->addProductToOrder($order, $productId, $date);
 
-        $item->save();
+        $this->setBillingData($order, $advertiserId);
 
-
-        $billingData = $this->getBillingData($advertiserId);
-        $order->set_billing_company($billingData['company']);
-        //$order->set_billing_first_name($billingData['first_name']);
-        //$order->set_billing_last_name($billingData['last_name']);
-        $order->set_billing_email($billingData['email']);
-        $order->set_billing_phone($billingData['phone']);
-        $order->set_billing_address_1($billingData['address']);
-
-        $order->add_meta_data('_advertisement_id', $postId);
-        $order->add_meta_data('_advertisement_date', $date);
-        $order->add_meta_data('_advertisement_year', $this->getYear($date));
-        $order->add_meta_data('_advertisement_month', $this->getMonth($date));
-        $order->add_meta_data('_advertiser_id', $advertiserId);
+        $this->addMetaDataToOrder($order, $postId, $date, $advertiserId, $productId);
         
         $order->calculate_totals();
         $order->save();
         return (int)$order->get_id();
     }
+
+    private function addProductToOrder(\WC_Order $order, int $productId, string $date) {
+        $itemId = $order->add_product(wc_get_product($productId), 1);
+        $item = $order->get_item($itemId);
+        $monthName = $this->getMonthName($this->getMonth($date));
+        $item->add_meta_data( 'Payment for', $monthName . ' ' . $this->getYear($date), true );
+        $item->save();
+    }
+    private function setBillingData(\WC_Order $order, int $advertiserId) {
+        $billingData = $this->getBillingData($advertiserId);
+        //$order->set_billing_first_name($billingData['first_name']);
+        //$order->set_billing_last_name($billingData['last_name']);
+        $order->set_billing_company($billingData['company']);
+        $order->set_billing_email($billingData['email']);
+        $order->set_billing_phone($billingData['phone']);
+        $order->set_billing_address_1($billingData['address']);
+    }
+    private function addMetaDataToOrder(\WC_Order $order, int $postId, string $date, int $advertiserId, int $productId) {
+        $order->add_meta_data('_advertisement_id', $postId);
+        $order->add_meta_data('_advertisement_date', $date);
+        $order->add_meta_data('_advertisement_year', $this->getYear($date));
+        $order->add_meta_data('_advertisement_month', $this->getMonth($date));
+        $order->add_meta_data('_advertiser_id', $advertiserId);
+        $order->add_meta_data('_advertiser_vat_number', $this->getVatNumber($advertiserId));
+    }
+
     private function getYear(string $date): int {
         return date('Y', strtotime($date));
     }
@@ -60,6 +69,17 @@ class AdvertisementOrderManager {
             'phone' => get_post_meta($advertiserId, 'phone', true),
             'address' => get_post_meta($advertiserId, 'address', true),
         ];
+    }
+    private function getVatNumber(int $advertiserId): string {
+        $vat_number = get_post_meta($advertiserId, 'vat_number', true);
+        if ($vat_number) {
+            return $vat_number;
+        }
+        $user = get_user_by('email', get_post_meta($advertiserId, 'email', true));
+        if ($user) {
+            return get_user_meta($user->ID, 'vat_number', true);
+        }
+        return '';
     }
     
     public function getAllOrdersOfAdvertisement(int $postId, int $limit = 10) {
