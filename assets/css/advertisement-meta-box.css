@@ -1,0 +1,63 @@
+#invoice-ansver-text.error-message {
+    display: block;
+    color: red;
+    margin-top: 10px;
+}
+#invoice-ansver-text.success-message {
+    display: block;
+    color: green;
+    margin-top: 10px;
+}
+#invoice-ansver-text {
+    display: none;
+}
+#invoice-date {
+    width: 100%;
+}
+.invoice-date-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.invoice-date-container label {
+    width: 50px;
+}
+.invoice-date-container input {
+    background: #f0f0f0;
+    border: none;
+    
+}
+.invoice-date-container #invoice-year {
+    width: 50px;
+}
+.invoice-date-container #invoice-month {
+    width: 90px;
+}
+
+.order-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.order-item a {
+    flex: 1;
+}
+.order-item span {
+    flex: 1;
+}
+.order-item span:last-child {
+    flex: 1;
+}
+.order-item span.order-status {
+    text-align: right;
+}
+.order-item span.order-status-pending {
+    color: #ff0000;
+}
+.order-item span.order-status-processing {
+    color: #0000ff;
+}
+.order-item span.order-status-completed {
+    color: #00ff00;
+}
