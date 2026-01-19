@@ -91,8 +91,10 @@ class AdvertisementOrderManager {
                     'value' => $postId,
                 ],
             ],
-            'orderby'  => 'meta_value',
-            'order'    => 'DESC',
+            'orderby' => [
+                'meta_value' => 'DESC',
+                'ID' => 'DESC'
+            ],
             'meta_key' => '_advertisement_date',
         ]);
         return $orders;
