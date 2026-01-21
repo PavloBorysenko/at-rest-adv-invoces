@@ -2,7 +2,7 @@
 /**
  * Plugin Name: At Rest Adv Invoices
  * Description: A plugin to create invoices for advertisements
- * Version: 1.0.1
+ * Version: 1.1.0
  * Author: Na-Gora
  */
 

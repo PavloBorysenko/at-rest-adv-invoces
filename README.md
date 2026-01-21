@@ -10,6 +10,7 @@ This plugin automatically generates WooCommerce orders (invoices) for advertisem
 
 - **Date Picker**: Select the billing date for the invoice (past dates only)
 - **Auto-filled Fields**: Year and month are automatically populated based on the selected date
+- **Invoice amount**: You can set a custom price for the invoice. By default, the price is taken from the product
 - **Create Invoice Button**: Generates a WooCommerce order with advertiser billing information
 - **Orders List**: Displays all previously created orders for the current advertisement with status and direct links
 - **Custom Column**: Shows order information in the advertisements list table
@@ -85,6 +86,8 @@ Verify the payment link in the email.
 ---
 
 ## 5. Changelog
+**v1.1.0 - January 21, 2026**
+- Added custom invoice amount
 
 **v1.0.1 - January 15, 2026**
 - Added custom column to advertisements list showing invoice information
