@@ -4,12 +4,12 @@ namespace Supernova\AtRestAdvInvoices;
 
 class AdvertisementOrderManager {
 
-    public function createOrder(int $postId, string $date, int $advertiserId, int $productId): int {
+    public function createOrder(int $postId, string $date, int $advertiserId, int $productId, float|null $customPrice): int {
         $order = new \WC_Order();
         $order->set_customer_id(0);
         $order->set_status('pending');
 
-        $this->addProductToOrder($order, $productId, $date);
+        $this->addProductToOrder($order, $productId, $date, $customPrice);
 
         $this->setBillingData($order, $advertiserId);
 
@@ -20,11 +20,20 @@ class AdvertisementOrderManager {
         return (int)$order->get_id();
     }
 
-    private function addProductToOrder(\WC_Order $order, int $productId, string $date) {
-        $itemId = $order->add_product(wc_get_product($productId), 1);
+    private function addProductToOrder(\WC_Order $order, int $productId, string $date, float|null $customPrice) {
+        $product = wc_get_product($productId);
+        if ($customPrice !== null) {
+            $product->set_price( $customPrice );
+        }
+       
+        $itemId = $order->add_product($product, 1);
         $item = $order->get_item($itemId);
+        
+
+        
         $monthName = $this->getMonthName($this->getMonth($date));
-        $item->add_meta_data( 'Payment for', $monthName . ' ' . $this->getYear($date), true );
+        $item->add_meta_data('Payment for', $monthName . ' ' . $this->getYear($date), true);
+        
         $item->save();
     }
     private function setBillingData(\WC_Order $order, int $advertiserId) {

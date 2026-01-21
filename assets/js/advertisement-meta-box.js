@@ -43,8 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const postId = button.dataset.postId;
         const date = document.getElementById('invoice-date').value;
-        const year = document.getElementById('invoice-year').value;
-        const month = document.getElementById('invoice-month').value;
+        const productPrice = document.getElementById('product-price').value;
 
         button.disabled = true;
         spinner.classList.add('is-active');
@@ -56,8 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('nonce', atRestInvoiceData.nonce);
         formData.append('post_id', postId);
         formData.append('date', date);
-        //formData.append('year', year);
-        //formData.append('month', month);
+        formData.append('product_price', productPrice);
 
         fetch(atRestInvoiceData.ajaxUrl, {
             method: 'POST',

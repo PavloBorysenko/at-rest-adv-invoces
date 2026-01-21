@@ -65,3 +65,24 @@
     border-bottom: 1px solid #ccc;
     padding: 10px;
 }
+
+.invoice-amount-container {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+.invoice-amount-container label {
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+.invoice-amount-container input {
+    flex: 0 0 auto;
+    width: 70px;
+}
+.invoice-amount-container p {
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+}

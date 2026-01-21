@@ -12,11 +12,18 @@
     </p>
     
     <div class="invoice-date-container">
-        <label for="invoice-year"> Billing Month:</label>    
+        <label for="invoice-year">Billing Month:</label>    
         <input type="text" id="invoice-year" class="regular-text" readonly>
         <input type="text" id="invoice-month" class="regular-text" readonly>
     </div>
-
+    <div class="invoice-amount-container">
+        <label for="product-price">Invoice amount:</label>
+        <input type="text" 
+            id="product-price" 
+            class="regular-text" 
+            value="<?php echo $productPrice; ?>">
+        <p><?php echo $currencySymbol; ?>/<small>(VAT included)</small></p>    
+    </div>
     <p>
         <button type="button" 
             id="create-invoice" 
@@ -29,7 +36,7 @@
 
     <div id="invoice-ansver-text"></div>
 
-    <h3> 10 latest orders list for this advertisement:</h3>
+    <h3>10 latest orders list for this advertisement:</h3>
     <div id="orders-list">
         <?php foreach ($ordersData as $order) : ?>
             <div class="order-item">
@@ -42,3 +49,4 @@
             <div class="no-orders-message">No orders found</div>
         <?php endif; ?>
     </div>
+</div>

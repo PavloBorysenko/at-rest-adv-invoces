@@ -30,6 +30,8 @@ class AdvertisementMetaBox {
 
     public function render($post) {
         $id = $post->ID;
+        $productPrice = $this->getProductPriceByPostId($id);
+        $currencySymbol = get_woocommerce_currency_symbol();
         $ordersData = $this->getOrdersData($id);
         $advertiserId = (int)get_post_meta($id, 'advertiser', true);
         include AT_REST_ADV_INVOICES_DIR . 'views/advertisement-meta-box.php';
@@ -74,6 +76,7 @@ class AdvertisementMetaBox {
 
         $postId = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
         $date = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : '';
+        $productPrice = isset($_POST['product_price']) ? floatval($_POST['product_price']) : null;
 
 
         if (!$postId || !$date) {
@@ -89,7 +92,7 @@ class AdvertisementMetaBox {
             wp_send_json_error(['message' => 'Product not found for ad type: ' . $adType]);
         }
 
-        $orderId = $this->orderManager->createOrder($postId, $date, $advertiserId, $productId);
+        $orderId = $this->orderManager->createOrder($postId, $date, $advertiserId, $productId, $productPrice);
         if ($orderId <= 0) {
             wp_send_json_error(['message' => 'Failed to create order']);
         }
@@ -117,5 +120,13 @@ class AdvertisementMetaBox {
         }
         return $ordersData;
     }
-
+    private function getProductPriceByPostId($id):float {
+        $adType = $this->getPostAdType($id);
+        $productId = $this->settingsPage->getProductByAdType($adType); 
+        $product = wc_get_product($productId);
+        if (!$product) {
+            return 0;
+        }
+        return (float) $product->get_price();
+    }
 }
