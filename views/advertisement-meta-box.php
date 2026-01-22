@@ -18,7 +18,7 @@
     </div>
     <div class="invoice-amount-container">
         <label for="product-price">Invoice amount:</label>
-        <input type="text" 
+        <input type="number" 
             id="product-price" 
             class="regular-text" 
             value="<?php echo $productPrice; ?>">
